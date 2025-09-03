@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Sistema LotoFácil - Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Estilos do Login */
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-logo {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #4CAF50;
+        }
+
+        .login-title {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 1.5em;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .error-message {
+            color: #f44336;
+            background: #ffebee;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .success-message {
+            color: #4CAF50;
+            background: #e8f5e8;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .demo-credentials {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .demo-credentials strong {
+            color: #333;
+        }
+
+        /* Estilos do Sistema Principal */
+        .main-system {
+            display: none;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        .logout-btn {
+            background-color: #f44336;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        .user-info {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Media Queries para Responsividade */
+        @media (max-width: 768px) {
+            .login-container {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+            
+            .main-system {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .header-bar {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+
+        /* Estilos existentes do sistema */
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .section h2 {
+            margin-top: 0;
+            color: #555;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        input[type="text"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        @media (max-width: 768px) {
+            input[type="text"] {
+                font-size: 16px;
+                padding: 15px;
+            }
+        }
+        button {
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            touch-action: manipulation;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .combinations {
+            margin-top: 20px;
+        }
+        .combination {
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+        }
+        .combination h4 {
+            margin-top: 0;
+            color: #333;
+        }
+        .numbers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        .number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background-color: #e0e0e0;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .hit {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .total-hits {
+            font-weight: bold;
+            color: #4CAF50;
+            font-size: 16px;
+        }
+        .error {
+            color: #f44336;
+            font-weight: bold;
+        }
+        .success {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .instructions {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4CAF50;
+        }
+        .number-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+            justify-content: center;
+        }
+        .selectable-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background-color: #e0e0e0;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        .selectable-number:hover {
+            background-color: #d0d0d0;
+            transform: scale(1.1);
+        }
+        .selectable-number:active {
+            transform: scale(0.95);
+        }
+        .selectable-number.selected {
+            background-color: #9c27b0;
+            color: white;
+            border-color: #7b1fa2;
+            transform: scale(1.1);
+        }
+        .selection-info {
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        
+        /* Estilos para o histórico */
+        .history-section {
+            display: none;
+        }
+        .history-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .history-date {
+            font-weight: bold;
+            color: #333;
+            font-size: 18px;
+        }
+        .history-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-secondary {
+            background-color: #2196F3;
+        }
+        .btn-secondary:hover {
+            background-color: #1976D2;
+        }
+        .btn-danger {
+            background-color: #f44336;
+        }
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+        .btn-warning {
+            background-color: #ff9800;
+        }
+        .btn-warning:hover {
+            background-color: #f57c00;
+        }
+        .history-combinations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .history-combination {
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .history-combination h5 {
+            margin: 0 0 10px 0;
+            color: #555;
+        }
+        .clear-history-btn {
+            background-color: #f44336;
+            margin-top: 20px;
+        }
+        .clear-history-btn:hover {
+            background-color: #d32f2f;
+        }
+        .nav-tabs {
+            display: flex;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 20px;
+        }
+        .nav-tab {
+            padding: 12px 24px;
+            background-color: #f8f9fa;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-tab.active {
+            background-color: white;
+            border-bottom-color: #4CAF50;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .nav-tab:hover {
+            background-color: #e9ecef;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .no-history {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        /* Media Queries para Responsividade */
+        @media (max-width: 768px) {
+            .section {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            .section h2 {
+                font-size: 18px;
+            }
+            button {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 10px;
+                padding: 15px;
+                font-size: 16px;
+            }
+            .nav-tabs {
+                flex-direction: column;
+            }
+            .nav-tab {
+                width: 100%;
+                margin-bottom: 2px;
+            }
+            .history-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            .history-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .history-actions button {
+                width: 48%;
+                margin: 0;
+            }
+            .history-combinations {
+                grid-template-columns: 1fr;
+            }
+            .number-selector {
+                gap: 6px;
+            }
+            .selectable-number {
+                width: 35px;
+                height: 35px;
+                line-height: 35px;
+                font-size: 14px;
+            }
+            .number {
+                width: 25px;
+                height: 25px;
+                line-height: 25px;
+                font-size: 12px;
+            }
+            .numbers {
+                gap: 3px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .section {
+                padding: 10px;
+            }
+            .section h2 {
+                font-size: 16px;
+            }
+            .selectable-number {
+                width: 32px;
+                height: 32px;
+                line-height: 32px;
+                font-size: 13px;
+            }
+            .number {
+                width: 22px;
+                height: 22px;
+                line-height: 22px;
+                font-size: 11px;
+            }
+            .history-date {
+                font-size: 14px;
+            }
+            .instructions {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        /* Estilos do Modal de Administrador */
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+            background-color: #f8f9fa;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #333;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .admin-warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .user-list {
+            margin-bottom: 20px;
+        }
+
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .user-info-display {
+            flex: 1;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .add-user-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+
+        .admin-actions {
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+
+        .admin-actions button {
+            margin: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+            
+            .modal-header {
+                padding: 15px;
+            }
+            
+            .modal-body {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-logo">🎯</div>
+        <h1 class="login-title">Sistema LotoFácil</h1>
+
+        <!-- Formulário de Cadastro -->
+        <div id="registerScreen" style="display:none;">
+            <h2>Cadastro</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Nome:</label>
+                    <input type="text" id="registerName" required placeholder="Digite seu nome">
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">E-mail:</label>
+                    <input type="email" id="registerEmail" required placeholder="Digite seu e-mail">
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Senha:</label>
+                    <input type="password" id="registerPassword" required placeholder="Digite sua senha">
+                </div>
+                <button type="submit" class="login-btn">Cadastrar</button>
+                <button type="button" class="login-btn" onclick="showLoginForm()">Já tenho conta</button>
+            </form>
+            <div id="registerError" class="error-message"></div>
+            <div id="registerSuccess" class="success-message"></div>
+        </div>
+
+        <!-- Formulário de Login -->
+        <form class="login-form" id="loginForm">
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required placeholder="Digite seu e-mail">
+            </div>
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" required placeholder="Digite sua senha">
+            </div>
+            <button type="submit" class="login-btn">Entrar no Sistema</button>
+        </form>
+        <button type="button" class="login-btn" onclick="showRegisterForm()">Criar Conta</button>
+
+        <div id="errorMessage" class="error-message"></div>
+        <div id="successMessage" class="success-message"></div>
+
+        <div style="margin-top: 20px;">
+            <a href="#" id="linkCompartilhar" onclick="compartilharSistema()" style="color: #2196F3; text-decoration: underline; font-weight: bold;">
+                🔗 Compartilhar acesso para testes
+            </a>
+        </div>
+    </div>
+
+    <!-- Sistema Principal -->
+    <div id="mainSystem" class="main-system">
+        <div class="header-bar">
+            <h1>🎯 Sistema LotoFácil</h1>
+            <div>
+                <div class="user-info" id="userInfo">Bem-vindo!</div>
+                <button class="btn-secondary" onclick="showAdminPanel()" id="adminBtn" style="display: none;">⚙️ Configurações</button>
+                <button class="logout-btn" onclick="logout()">Sair</button>
+            </div>
+        </div>
+        
+        <!-- Navegação por abas -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('main')">Gerador</button>
+            <button class="nav-tab" onclick="showTab('history')">Histórico</button>
+        </div>
+
+        <!-- Aba Principal -->
+        <div id="main-tab" class="tab-content active">
+            <div class="instructions">
+                <strong>Como usar:</strong><br>
+                1. Clique nos números para selecionar 20 números<br>
+                2. Clique em "Gerar Combinações" para criar 10 combinações de 15 números<br>
+                3. Digite o resultado da Loto Fácil (15 números)<br>
+                4. Clique em "Verificar Acertos" para ver os resultados<br>
+                5. As combinações são salvas automaticamente no histórico
+            </div>
+
+            <div class="section">
+                <h2>📝 Selecione seus 20 números</h2>
+                <div class="input-group">
+                    <label>Clique nos números para selecionar (20 números):</label>
+                    <div id="numberSelector" class="number-selector"></div>
+                    <div class="selection-info">
+                        <span id="selectedCount">0</span> de 20 números selecionados
+                    </div>
+                </div>
+                <button id="generateBtn" onclick="generateCombinations()" disabled>Gerar Combinações</button>
+            </div>
+
+            <div class="section">
+                <h2>🎲 Resultado da Loto Fácil</h2>
+                <div class="input-group">
+                    <label for="lotteryResult">Digite os 15 números sorteados (separados por vírgula ou espaço):</label>
+                    <input type="text" id="lotteryResult" placeholder="Ex: 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29">
+                </div>
+                <button onclick="checkHits()">Verificar Acertos</button>
+            </div>
+
+            <div id="combinationsResult" class="combinations"></div>
+        </div>
+
+        <!-- Aba de Histórico -->
+        <div id="history-tab" class="tab-content">
+            <div class="section">
+                <h2>📚 Histórico de Combinações</h2>
+                <p>Aqui você pode visualizar e verificar todas as combinações geradas anteriormente.</p>
+                <div id="historyContainer">
+                    <div class="no-history">Nenhuma combinação salva no histórico ainda.</div>
+                </div>
+                <button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar Todo o Histórico</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Administrador -->
+    <div id="adminModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>⚙️ Painel de Administrador</h2>
+                <span class="close" onclick="closeAdminModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="adminLoginSection">
+                    <h3>🔐 Acesso Administrativo</h3>
+                    <p>Digite a senha de administrador para acessar as configurações:</p>
+                    <input type="password" id="adminPassword" placeholder="Senha de administrador" style="width: 100%; margin: 10px 0;">
+                    <button onclick="verifyAdminPassword()">Acessar Configurações</button>
+                </div>
+                
+                <div id="adminPanelSection" style="display: none;">
+                    <h3>👥 Gerenciar Usuários</h3>
+                    <div class="admin-warning">
+                        <strong>⚠️ ATENÇÃO:</strong> Qualquer alteração aqui afetará todos os usuários do sistema!
+                    </div>
+                    
+                    <div class="user-list">
+                        <h4>Usuários Atuais:</h4>
+                        <div id="currentUsersList"></div>
+                    </div>
+                    
+                    <div class="add-user-section">
+                        <h4>Adicionar Novo Usuário:</h4>
+                        <input type="email" id="newUserEmail" placeholder="E-mail do usuário" style="width: 100%; margin: 5px 0;">
+                        <input type="password" id="newUserPassword" placeholder="Senha do usuário" style="width: 100%; margin: 5px 0;">
+                        <input type="text" id="newUserName" placeholder="Nome do usuário" style="width: 100%; margin: 5px 0;">
+                        <button onclick="addNewUser()">Adicionar Usuário</button>
+                    </div>
+                    
+                    <div class="admin-actions">
+                        <h4>Ações Administrativas:</h4>
+                        <button class="btn-warning" onclick="resetAllData()">🔄 Resetar Todos os Dados</button>
+                        <button class="btn-danger" onclick="changeAdminPassword()">🔑 Alterar Senha de Admin</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sistema de Autenticação
+        const users = [
+            // Usuários de Demonstração (você pode alterar ou remover)
+            { email: 'admin@lotofacil.com', password: '123456', name: 'Administrador' },
+            { email: 'usuario@lotofacil.com', password: '123456', name: 'Usuário' },
+            { email: 'teste@lotofacil.com', password: '123456', name: 'Usuário Teste' },
+            
+            // Adicione seus próprios usuários aqui:
+            // { email: 'seuemail@exemplo.com', password: 'suasenha123', name: 'Seu Nome' },
+            // { email: 'familia@exemplo.com', password: 'familia456', name: 'Família' },
+            // { email: 'amigo@exemplo.com', password: 'amigo789', name: 'Amigo' }
+        ];
+
+        // SENHA DE ADMINISTRADOR - ALTERE ESTA SENHA!
+        const ADMIN_PASSWORD = 'admin123456';
+        
+        // Verificar se é a primeira execução
+        let isFirstRun = !localStorage.getItem('lotoFacilFirstRun');
+        if (isFirstRun) {
+            localStorage.setItem('lotoFacilFirstRun', 'true');
+            // Definir senha de administrador na primeira execução
+            localStorage.setItem('lotoFacilAdminPassword', ADMIN_PASSWORD);
+        }
+
+        let currentUser = null;
+        let generatedCombinations = [];
+        let selectedNumbers = [];
+        let currentHistoryData = null;
+
+        // Verificar se o usuário já está logado
+        window.onload = function() {
+            const savedUser = localStorage.getItem('lotoFacilUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showMainSystem();
+            } else {
+                showLoginScreen();
+            }
+        };
+
+        // Funções de Login
+        function showLoginScreen() {
+            document.getElementById('loginScreen').style.display = 'block';
+            document.getElementById('mainSystem').style.display = 'none';
+        }
+
+        function showMainSystem() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainSystem').style.display = 'block';
+            
+            // Atualizar informações do usuário
+            document.getElementById('userInfo').textContent = `Bem-vindo, ${currentUser.name}!`;
+            
+            // Verificar se é administrador
+            checkIfAdmin();
+            
+            // Inicializar o sistema
+            initializeNumberSelector();
+            loadHistory();
+        }
+
+        function login(email, password) {
+            const user = users.find(u => u.email === email && u.password === password);
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('lotoFacilUser', JSON.stringify(user));
+                showSuccessMessage('Login realizado com sucesso!');
+                setTimeout(() => {
+                    showMainSystem();
+                }, 1000);
+                return true;
+            } else {
+                showErrorMessage('E-mail ou senha incorretos!');
+                return false;
+            }
+        }
+
+        function logout() {
+            if (confirm('Tem certeza que deseja sair do sistema?')) {
+                currentUser = null;
+                localStorage.removeItem('lotoFacilUser');
+                showLoginScreen();
+                // Limpar formulário
+                document.getElementById('loginForm').reset();
+                hideMessages();
+            }
+        }
+
+        function showErrorMessage(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        function showSuccessMessage(message) {
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        // Event listener para o formulário de login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            hideMessages();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (!email || !password) {
+                showErrorMessage('Por favor, preencha todos os campos!');
+                return;
+            }
+            
+            login(email, password);
+        });
+
+        // Funções do Sistema Principal
+        function showTab(tabName) {
+            // Esconder todas as abas
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Mostrar a aba selecionada
+            document.getElementById(tabName + '-tab').classList.add('active');
+            event.target.classList.add('active');
+
+            // Se for a aba de histórico, recarregar os dados
+            if (tabName === 'history') {
+                loadHistory();
+            }
+        }
+
+        function initializeNumberSelector() {
+            const selector = document.getElementById("numberSelector");
+            
+            for (let i = 1; i <= 25; i++) {
+                const numberDiv = document.createElement("div");
+                numberDiv.className = "selectable-number";
+                numberDiv.textContent = i.toString().padStart(2, '0');
+                numberDiv.onclick = function() {
+                    toggleNumberSelection(i);
+                };
+                selector.appendChild(numberDiv);
+            }
+        }
+
+        function toggleNumberSelection(number) {
+            const numberElement = event.target;
+            const index = selectedNumbers.indexOf(number);
+            
+            if (index === -1) {
+                // Adicionar número se ainda não atingiu o limite de 20
+                if (selectedNumbers.length < 20) {
+                    selectedNumbers.push(number);
+                    numberElement.classList.add('selected');
+                } else {
+                    alert("Você já selecionou 20 números! Desmarque um número para selecionar outro.");
+                    return;
+                }
+            } else {
+                // Remover número
+                selectedNumbers.splice(index, 1);
+                numberElement.classList.remove('selected');
+            }
+            
+            updateSelectionInfo();
+        }
+
+        function updateSelectionInfo() {
+            const countElement = document.getElementById("selectedCount");
+            const generateBtn = document.getElementById("generateBtn");
+            
+            countElement.textContent = selectedNumbers.length;
+            
+            if (selectedNumbers.length === 20) {
+                generateBtn.disabled = false;
+                generateBtn.style.backgroundColor = "#4CAF50";
+            } else {
+                generateBtn.disabled = true;
+                generateBtn.style.backgroundColor = "#cccccc";
+            }
+        }
+
+        function generateCombinations() {
+            if (selectedNumbers.length !== 20) {
+                alert("Por favor, selecione exatamente 20 números!");
+                return;
+            }
+
+            // Gerar 10 combinações diferentes
+            generatedCombinations = [];
+            for (let i = 0; i < 10; i++) {
+                const shuffled = [...selectedNumbers].sort(() => 0.5 - Math.random());
+                generatedCombinations.push(shuffled.slice(0, 15).sort((a, b) => a - b));
+            }
+
+            // Salvar no histórico
+            saveToHistory();
+
+            displayCombinations();
+        }
+
+        function saveToHistory() {
+            const historyData = {
+                date: new Date().toISOString(),
+                selectedNumbers: [...selectedNumbers],
+                combinations: [...generatedCombinations],
+                timestamp: Date.now(),
+                user: currentUser.email
+            };
+
+            // Carregar histórico existente
+            let history = JSON.parse(localStorage.getItem('lotoFacilHistory') || '[]');
+            
+            // Adicionar nova entrada
+            history.push(historyData);
+            
+            // Salvar no localStorage
+            localStorage.setItem('lotoFacilHistory', JSON.stringify(history));
+        }
+
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('lotoFacilHistory') || '[]');
+            const container = document.getElementById('historyContainer');
+            
+            // Filtrar histórico apenas do usuário atual
+            const userHistory = history.filter(entry => entry.user === currentUser.email);
+            
+            if (userHistory.length === 0) {
+                container.innerHTML = '<div class="no-history">Nenhuma combinação salva no histórico ainda.</div>';
+                return;
+            }
+
+            // Ordenar por data (mais recente primeiro)
+            userHistory.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            container.innerHTML = '';
+            
+            userHistory.forEach((entry, index) => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                
+                const date = new Date(entry.date);
+                const formattedDate = date.toLocaleDateString('pt-BR') + ' às ' + date.toLocaleTimeString('pt-BR');
+                
+                historyItem.innerHTML = `
+                    <div class="history-header">
+                        <div class="history-date">📅 ${formattedDate}</div>
+                        <div class="history-actions">
+                            <button class="btn-secondary" onclick="verifyHistoryEntry(${index})">🔍 Verificar</button>
+                            <button class="btn-danger" onclick="deleteHistoryEntry(${index})">🗑️ Excluir</button>
+                        </div>
+                    </div>
+                    <div class="history-combinations">
+                        ${entry.combinations.map((combo, comboIndex) => `
+                            <div class="history-combination">
+                                <h5>Combinação ${comboIndex + 1}:</h5>
+                                <div class="numbers">
+                                    ${combo.map(num => `<span class="number">${num.toString().padStart(2, '0')}</span>`).join('')}
+                                </div>
+                                <div class="total-hits">Acertos: <span id="history-hits-${index}-${comboIndex}">-</span></div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(historyItem);
+            });
+        }
+
+        function verifyHistoryEntry(index) {
+            const history = JSON.parse(localStorage.getItem('lotoFacilHistory') || '[]');
+            const userHistory = history.filter(entry => entry.user === currentUser.email);
+            const entry = userHistory[index];
+            
+            const result = prompt("Digite os 15 números sorteados (separados por vírgula ou espaço):");
+            if (!result) return;
+            
+            const lotteryNumbers = result.split(/[,\s]+/).filter(num => num.trim() !== "").map(Number);
+            
+            // Validar resultado da loteria
+            if (lotteryNumbers.length !== 15) {
+                alert("Por favor, digite exatamente 15 números do resultado!");
+                return;
+            }
+
+            // Validar se os números estão entre 1 e 25
+            for (let num of lotteryNumbers) {
+                if (num < 1 || num > 25 || !Number.isInteger(num)) {
+                    alert("Todos os números devem ser inteiros entre 1 e 25!");
+                    return;
+                }
+            }
+
+            // Verificar números duplicados
+            const uniqueLotteryNumbers = [...new Set(lotteryNumbers)];
+            if (uniqueLotteryNumbers.length !== 15) {
+                alert("Não pode haver números duplicados no resultado!");
+                return;
+            }
+
+            // Verificar acertos para cada combinação
+            entry.combinations.forEach((combo, comboIndex) => {
+                const hits = combo.filter(num => lotteryNumbers.includes(num));
+                const hitsCount = hits.length;
+                
+                // Atualizar o total de acertos
+                const hitsElement = document.getElementById(`history-hits-${index}-${comboIndex}`);
+                if (hitsElement) {
+                    hitsElement.textContent = `${hitsCount}/15`;
+                }
+                
+                // Destacar os números acertados
+                const historyItem = document.querySelectorAll('.history-item')[index];
+                const combinationDiv = historyItem.querySelectorAll('.history-combination')[comboIndex];
+                const numberSpans = combinationDiv.querySelectorAll('.number');
+                
+                numberSpans.forEach((span, numIndex) => {
+                    const num = combo[numIndex];
+                    if (lotteryNumbers.includes(num)) {
+                        span.classList.add('hit');
+                    } else {
+                        span.classList.remove('hit');
+                    }
+                });
+            });
+
+            // Mostrar estatísticas
+            showHistoryStatistics(index, entry.combinations, lotteryNumbers);
+        }
+
+        function showHistoryStatistics(index, combinations, lotteryNumbers) {
+            let totalHits = 0;
+            let maxHits = 0;
+            let minHits = 15;
+
+            combinations.forEach(combo => {
+                const hits = combo.filter(num => lotteryNumbers.includes(num)).length;
+                totalHits += hits;
+                maxHits = Math.max(maxHits, hits);
+                minHits = Math.min(minHits, hits);
+            });
+
+            const avgHits = (totalHits / combinations.length).toFixed(1);
+            
+            // Criar ou atualizar estatísticas
+            const historyItem = document.querySelectorAll('.history-item')[index];
+            let statsDiv = historyItem.querySelector('.history-statistics');
+            if (!statsDiv) {
+                statsDiv = document.createElement('div');
+                statsDiv.className = 'history-statistics';
+                statsDiv.style.cssText = 'margin-top: 15px; padding: 15px; background-color: #e8f5e8; border-radius: 5px; border-left: 4px solid #4CAF50;';
+                historyItem.appendChild(statsDiv);
+            }
+
+            statsDiv.innerHTML = `
+                <h4>📊 Estatísticas desta sessão:</h4>
+                <p><strong>Média de acertos:</strong> ${avgHits}/15</p>
+                <p><strong>Maior número de acertos:</strong> ${maxHits}/15</p>
+                <p><strong>Menor número de acertos:</strong> ${minHits}/15</p>
+                <p><strong>Total de acertos:</strong> ${totalHits} em ${combinations.length} combinações</p>
+            `;
+        }
+
+        function deleteHistoryEntry(index) {
+            if (confirm('Tem certeza que deseja excluir esta entrada do histórico?')) {
+                let history = JSON.parse(localStorage.getItem('lotoFacilHistory') || '[]');
+                const userHistory = history.filter(entry => entry.user === currentUser.email);
+                const entryToDelete = userHistory[index];
+                
+                // Encontrar o índice real no array completo
+                const realIndex = history.findIndex(entry => 
+                    entry.timestamp === entryToDelete.timestamp && 
+                    entry.user === currentUser.email
+                );
+                
+                if (realIndex !== -1) {
+                    history.splice(realIndex, 1);
+                    localStorage.setItem('lotoFacilHistory', JSON.stringify(history));
+                    loadHistory();
+                }
+            }
+        }
+
+        function clearHistory() {
+            if (confirm('Tem certeza que deseja limpar todo o histórico? Esta ação não pode ser desfeita.')) {
+                let history = JSON.parse(localStorage.getItem('lotoFacilHistory') || '[]');
+                // Remover apenas entradas do usuário atual
+                history = history.filter(entry => entry.user !== currentUser.email);
+                localStorage.setItem('lotoFacilHistory', JSON.stringify(history));
+                loadHistory();
+            }
+        }
+
+        function displayCombinations() {
+            const resultDiv = document.getElementById("combinationsResult");
+            resultDiv.innerHTML = "<h2>🎯 Combinações Geradas:</h2>";
+            
+            generatedCombinations.forEach((combo, index) => {
+                const comboDiv = document.createElement("div");
+                comboDiv.className = "combination";
+                comboDiv.innerHTML = `
+                    <h4>Combinação ${index + 1}:</h4>
+                    <div class="numbers">
+                        ${combo.map(num => `<span class="number">${num.toString().padStart(2, '0')}</span>`).join('')}
+                    </div>
+                    <div class="total-hits">Acertos: <span id="hits-${index}">-</span></div>
+                `;
+                resultDiv.appendChild(comboDiv);
+            });
+        }
+
+        function checkHits() {
+            if (generatedCombinations.length === 0) {
+                alert("Primeiro gere as combinações!");
+                return;
+            }
+
+            const input = document.getElementById("lotteryResult").value;
+            const lotteryNumbers = input.split(/[,\s]+/).filter(num => num.trim() !== "").map(Number);
+            
+            // Validar resultado da loteria
+            if (lotteryNumbers.length !== 15) {
+                alert("Por favor, digite exatamente 15 números do resultado!");
+                return;
+            }
+
+            // Validar se os números estão entre 1 e 25
+            for (let num of lotteryNumbers) {
+                if (num < 1 || num > 25 || !Number.isInteger(num)) {
+                    alert("Todos os números devem ser inteiros entre 1 e 25!");
+                    return;
+                }
+            }
+
+            // Verificar números duplicados
+            const uniqueLotteryNumbers = [...new Set(lotteryNumbers)];
+            if (uniqueLotteryNumbers.length !== 15) {
+                alert("Não pode haver números duplicados no resultado!");
+                return;
+            }
+
+            // Verificar acertos para cada combinação
+            generatedCombinations.forEach((combo, index) => {
+                const hits = combo.filter(num => lotteryNumbers.includes(num));
+                const hitsCount = hits.length;
+                
+                // Atualizar o total de acertos
+                document.getElementById(`hits-${index}`).textContent = `${hitsCount}/15`;
+                
+                // Destacar os números acertados
+                const numbersDiv = document.querySelectorAll('.combination')[index].querySelector('.numbers');
+                const numberSpans = numbersDiv.querySelectorAll('.number');
+                
+                numberSpans.forEach((span, numIndex) => {
+                    const num = combo[numIndex];
+                    if (lotteryNumbers.includes(num)) {
+                        span.classList.add('hit');
+                    } else {
+                        span.classList.remove('hit');
+                    }
+                });
+            });
+
+            // Mostrar estatísticas gerais
+            showStatistics();
+        }
+
+        function showStatistics() {
+            const hitsElements = document.querySelectorAll('[id^="hits-"]');
+            let totalHits = 0;
+            let maxHits = 0;
+            let minHits = 15;
+
+            hitsElements.forEach(element => {
+                const hits = parseInt(element.textContent.split('/')[0]);
+                totalHits += hits;
+                maxHits = Math.max(maxHits, hits);
+                minHits = Math.min(minHits, hits);
+            });
+
+            const avgHits = (totalHits / hitsElements.length).toFixed(1);
+            
+            // Criar ou atualizar estatísticas
+            let statsDiv = document.getElementById('statistics');
+            if (!statsDiv) {
+                statsDiv = document.createElement('div');
+                statsDiv.id = 'statistics';
+                statsDiv.style.cssText = 'margin-top: 20px; padding: 15px; background-color: #e8f5e8; border-radius: 5px; border-left: 4px solid #4CAF50;';
+                document.getElementById('combinationsResult').appendChild(statsDiv);
+            }
+
+            statsDiv.innerHTML = `
+                <h3>📊 Estatísticas:</h3>
+                <p><strong>Média de acertos:</strong> ${avgHits}/15</p>
+                <p><strong>Maior número de acertos:</strong> ${maxHits}/15</p>
+                <p><strong>Menor número de acertos:</strong> ${minHits}/15</p>
+                <p><strong>Total de acertos:</strong> ${totalHits} em ${hitsElements.length} combinações</p>
+            `;
+        }
+
+        // Funções do Painel de Administrador
+        function checkIfAdmin() {
+            const adminPassword = localStorage.getItem('lotoFacilAdminPassword');
+            if (adminPassword === ADMIN_PASSWORD) {
+                document.getElementById('adminBtn').style.display = 'inline-block';
+            }
+        }
+
+        function showAdminPanel() {
+            document.getElementById('adminModal').style.display = 'flex';
+            document.getElementById('adminLoginSection').style.display = 'block';
+            document.getElementById('adminPanelSection').style.display = 'none';
+            document.getElementById('adminPassword').value = '';
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').style.display = 'none';
+        }
+
+        function verifyAdminPassword() {
+            const inputPassword = document.getElementById('adminPassword').value;
+            const storedPassword = localStorage.getItem('lotoFacilAdminPassword');
+            
+            if (inputPassword === storedPassword) {
+                document.getElementById('adminLoginSection').style.display = 'none';
+                document.getElementById('adminPanelSection').style.display = 'block';
+                loadCurrentUsers();
+            } else {
+                alert('Senha de administrador incorreta!');
+            }
+        }
+
+        function loadCurrentUsers() {
+            const container = document.getElementById('currentUsersList');
+            container.innerHTML = '';
+            
+            users.forEach((user, index) => {
+                const userDiv = document.createElement('div');
+                userDiv.className = 'user-item';
+                userDiv.innerHTML = `
+                    <div class="user-info-display">
+                        <strong>${user.name}</strong> (${user.email})
+                    </div>
+                    <div class="user-actions">
+                        <button class="btn-warning" onclick="editUser(${index})">✏️</button>
+                        <button class="btn-danger" onclick="deleteUser(${index})">🗑️</button>
+                    </div>
+                `;
+                container.appendChild(userDiv);
+            });
+        }
+
+        function addNewUser() {
+            const email = document.getElementById('newUserEmail').value;
+            const password = document.getElementById('newUserPassword').value;
+            const name = document.getElementById('newUserName').value;
+            
+            if (!email || !password || !name) {
+                alert('Por favor, preencha todos os campos!');
+                return;
+            }
+            
+            if (users.find(u => u.email === email)) {
+                alert('Este e-mail já está em uso!');
+                return;
+            }
+            
+            users.push({ email, password, name });
+            saveUsersToStorage();
+            loadCurrentUsers();
+            
+            // Limpar campos
+            document.getElementById('newUserEmail').value = '';
+            document.getElementById('newUserPassword').value = '';
+            document.getElementById('newUserName').value = '';
+            
+            alert('Usuário adicionado com sucesso!');
+        }
+
+        function editUser(index) {
+            const user = users[index];
+            const newName = prompt('Novo nome:', user.name);
+            const newPassword = prompt('Nova senha (deixe em branco para manter a atual):', '');
+            
+            if (newName) {
+                user.name = newName;
+                if (newPassword) {
+                    user.password = newPassword;
+                }
+                saveUsersToStorage();
+                loadCurrentUsers();
+                alert('Usuário atualizado com sucesso!');
+            }
+        }
+
+        function deleteUser(index) {
+            const user = users[index];
+            if (confirm(`Tem certeza que deseja excluir o usuário ${user.name}?`)) {
+                users.splice(index, 1);
+                saveUsersToStorage();
+                loadCurrentUsers();
+                alert('Usuário excluído com sucesso!');
+            }
+        }
+
+        function saveUsersToStorage() {
+            localStorage.setItem('lotoFacilUsers', JSON.stringify(users));
+        }
+
+        function resetAllData() {
+            if (confirm('⚠️ ATENÇÃO: Isso irá apagar TODOS os dados de TODOS os usuários! Tem certeza?')) {
+                localStorage.clear();
+                alert('Todos os dados foram resetados. A página será recarregada.');
+                location.reload();
+            }
+        }
+
+        function changeAdminPassword() {
+            const currentPassword = prompt('Digite a senha atual de administrador:');
+            const storedPassword = localStorage.getItem('lotoFacilAdminPassword');
+            
+            if (currentPassword === storedPassword) {
+                const newPassword = prompt('Digite a nova senha de administrador:');
+                if (newPassword && newPassword.length >= 6) {
+                    localStorage.setItem('lotoFacilAdminPassword', newPassword);
+                    alert('Senha de administrador alterada com sucesso!');
+                } else {
+                    alert('A nova senha deve ter pelo menos 6 caracteres!');
+                }
+            } else {
+                alert('Senha atual incorreta!');
+            }
+        }
+
+        // Carregar usuários do localStorage se existirem
+        const savedUsers = localStorage.getItem('lotoFacilUsers');
+        if (savedUsers) {
+            users.length = 0; // Limpar array
+            users.push(...JSON.parse(savedUsers));
+        }
+
+        function showRegisterForm() {
+            document.getElementById('registerScreen').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        function showLoginForm() {
+            document.getElementById('registerScreen').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'flex';
+            document.getElementById('registerError').style.display = 'none';
+            document.getElementById('registerSuccess').style.display = 'none';
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value.trim();
+
+            if (!name || !email || !password) {
+                showRegisterError('Preencha todos os campos!');
+                return;
+            }
+            if (users.find(u => u.email === email)) {
+                showRegisterError('E-mail já cadastrado!');
+                return;
+            }
+            users.push({ email, password, name });
+            saveUsersToStorage();
+            showRegisterSuccess('Cadastro realizado! Faça login.');
+            setTimeout(showLoginForm, 1500);
+        });
+
+        function showRegisterError(msg) {
+            document.getElementById('registerError').textContent = msg;
+            document.getElementById('registerError').style.display = 'block';
+            document.getElementById('registerSuccess').style.display = 'none';
+        }
+        function showRegisterSuccess(msg) {
+            document.getElementById('registerSuccess').textContent = msg;
+            document.getElementById('registerSuccess').style.display = 'block';
+            document.getElementById('registerError').style.display = 'none';
+        }
+
+        function compartilharSistema() {
+            // Gera o link local do sistema para compartilhar
+            const url = window.location.href;
+            navigator.clipboard.writeText(url)
+                .then(() => {
+                    alert('Link copiado! Envie para quem desejar realizar os testes.');
+                })
+                .catch(() => {
+                    alert('Não foi possível copiar o link. Copie manualmente: ' + url);
+                });
+        }
+    </script>
+</body>
+</html>
